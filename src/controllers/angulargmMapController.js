@@ -310,6 +310,15 @@
     };
 
     /**
+     * Adds a control to the map.
+     */
+    this.addControl = function(ctrl, position){
+      assertDefined(ctrl, 'ctrl');
+      assertDefined(position, 'position');
+      this._map.controls[google.maps.ControlPosition[position]].push(ctrl);
+    };
+
+    /**
      * Updates an element on the map with new options.
      * @return {boolean} true if an element was updated, false if there was no
      *   element with the given id to update
