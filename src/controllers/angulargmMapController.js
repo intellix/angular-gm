@@ -40,6 +40,7 @@
       this._map = this._createMap(mapId, mapDiv, config, angulargmContainer, $scope);
       this._elements = {};
       this._listeners = {};
+      this._controlPositions = [];
 
       // 'public' properties
       this.dragging = false;
@@ -186,6 +187,10 @@
       if (streetView && streetView.getVisible()) {
         streetView.setVisible(false);
       }
+
+      angular.forEach(this._controlPositions, function(position){
+        self._map.controls[position].clear();
+      });
     };
 
 
@@ -315,7 +320,11 @@
     this.addControl = function(ctrl, position){
       assertDefined(ctrl, 'ctrl');
       assertDefined(position, 'position');
-      this._map.controls[google.maps.ControlPosition[position]].push(ctrl);
+      var mapPosition = google.maps.ControlPosition[position];
+      if(this._controlPositions.indexOf(mapPosition)){
+        this._controlPositions.push(mapPosition);
+      }
+      this._map.controls[mapPosition].push(ctrl);
     };
 
     /**
