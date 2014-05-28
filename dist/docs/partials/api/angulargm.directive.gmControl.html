@@ -1,0 +1,27 @@
+<h1><code ng:non-bindable="">gmControl</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">angulargm</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="angulargm-directive-page angulargm-directive-gmcontrol-page"><p>A directive for attaching custom controls to a <code>gmMap</code>
+You may have multiple per <code>gmMap</code>
+To use, put this tag on an html element and the element and its children
+will be placed into the map at <code>gm-position</code>.
+See <a href="https://developers.google.com/maps/documentation/javascript/controls#CustomControls">Custom Controls</a>
+for more details</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY gm-control
+     gm-position="{expression}"
+     gm-index="{expression}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>gm-position</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="angulargm-directive-page angulargm-directive-gmcontrol-page"><p>an angular expression that evaluates to
+one of the google.maps.ControlPosition constant values.
+for example use TOP_RIGHT to place in the upper right section</p>
+</div></td></tr><tr><td>gm-index</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="angulargm-directive-page angulargm-directive-gmcontrol-page"><p>not required. Should be a number.
+Will be sent to google as the control index.
+Controls with a lower index are placed first.</p>
+</div></td></tr></tbody></table></div>
+</div>
