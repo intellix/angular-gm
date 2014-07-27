@@ -1,6 +1,6 @@
 /**
  * AngularGM - Google Maps Directives for AngularJS
- * @version v1.0.0 - 2014-05-28
+ * @version v1.0.0 - 2014-07-27
  * @link http://dylanfprice.github.com/angular-gm
  * @author Dylan Price <the.dylan.price@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -193,21 +193,9 @@
         });
       });
 
-      /* The info window's contents dont' need to be on the dom anymore,
-       google maps has them stored. So we just replace the infowindow
-       element with an empty div. (we don't just straight remove it from
-       the dom because straight removing things from the dom can mess up
-       angular) */
-      element.replaceWith('<div></div>');
-
       //Decorate infoWindow.open to $compile contents before opening
       var _open = infoWindow.open;
-      var compiled = false;
       infoWindow.open = function open(map, anchor) {
-        if(!compiled){
-          $compile(element.contents())(scope);
-          compiled = true;
-        }
         _open.call(infoWindow, map, anchor);
       };
     }
