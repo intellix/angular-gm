@@ -1072,10 +1072,12 @@
               $timeout(function() {
                 var context = {object: object};
                 context[type] = element;
-                     // scope is this directive's isolate scope
-                     // scope.$parent is the scope of ng-transclude
-                     // scope.$parent.$parent is the one we want
-                handler(scope.$parent.$parent, context);
+                // scope is this directive's isolate scope
+                // scope.$parent is the scope of ng-transclude
+                // scope.$parent.$parent is gm-map scope
+                //scope.$parent.$parent.$parent is the correct scope
+                //this is fubar, should be grabbing the function differently
+                handler(scope.$parent.$parent.$parent, context);
               });
             });
           });
