@@ -157,10 +157,6 @@
       this.addMapListener('idle', function () {
         self.dragging = false;
       });
-
-      this.addMapListener('drag', function() {
-        self.dragging = true;
-      });
     };
 
 
