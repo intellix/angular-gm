@@ -1,6 +1,6 @@
 /**
  * AngularGM - Google Maps Directives for AngularJS
- * @version v1.0.0 - 2014-07-27
+ * @version v1.0.0 - 2015-02-17
  * @link http://dylanfprice.github.com/angular-gm
  * @author Dylan Price <the.dylan.price@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -311,7 +311,8 @@
 
   angular.module('AngularGM').
 
-  directive('gmMap', ['$timeout', 'angulargmUtils', function ($timeout, angulargmUtils) {
+
+  directive('gmMap', ['$timeout', 'angulargmUtils', 'debounce', function ($timeout, angulargmUtils, debounce) {
 
     /** aliases **/
     var getEventHandlers = angulargmUtils.getEventHandlers;
@@ -354,7 +355,7 @@
         hasMapTypeId = true;
       }
 
-      var updateScope = function() {
+      var _updateScope = function() {
         $timeout(function () {
           if (hasCenter || hasZoom || hasBounds || hasMapTypeId) {
             scope.$apply(function (s) {
@@ -378,6 +379,7 @@
         });
       };
 
+      var updateScope = debounce(_updateScope, 100);
 
       // Add event listeners to the map
       controller.addMapListener('drag', updateScope);
@@ -1072,11 +1074,9 @@
               $timeout(function() {
                 var context = {object: object};
                 context[type] = element;
-                // scope is this directive's isolate scope
-                // scope.$parent is the scope of ng-transclude
-                // scope.$parent.$parent is gm-map scope
-                //scope.$parent.$parent.$parent is the correct scope
-                //this is fubar, should be grabbing the function differently
+                     // scope is this directive's isolate scope
+                     // scope.$parent is the scope of ng-transclude
+                     // scope.$parent.$parent is the one we want
                 handler(scope.$parent.$parent.$parent, context);
               });
             });
@@ -1383,6 +1383,51 @@
 })();
 
 /**
+ * @ngdoc service
+ * @name angulargm.service:debounce
+ *
+ * @description
+ * Debounce function. Stolen from https://github.com/shahata/angular-debounce
+ */
+(function () {
+'use strict';
+
+  angular.module('AngularGM').
+
+  factory('debounce', ['$timeout', function ($timeout) {
+    return function (func, wait, immediate) {
+      var timeout, args, context, result;
+      function debounce() {
+        /* jshint validthis:true */
+        context = this;
+        args = arguments;
+        var later = function () {
+          timeout = null;
+          if (!immediate) {
+            result = func.apply(context, args);
+          }
+        };
+        var callNow = immediate && !timeout;
+        if (timeout) {
+          $timeout.cancel(timeout);
+        }
+        timeout = $timeout(later, wait);
+        if (callNow) {
+          result = func.apply(context, args);
+        }
+        return result;
+      }
+      debounce.cancel = function () {
+        $timeout.cancel(timeout);
+        timeout = null;
+      };
+      return debounce;
+    };
+  }]);
+
+})();
+
+/**
  * Directive controller which is owned by the [gmMap]{@link module:gmMap}
  * directive and shared among all other angulargm directives.
  */
@@ -1540,10 +1585,6 @@
 
       this.addMapListener('idle', function () {
         self.dragging = false;
-      });
-
-      this.addMapListener('drag', function() {
-        self.dragging = true;
       });
     };
 

@@ -83,6 +83,15 @@ NG_DOCS={
       "moduleName": "angulargm",
       "shortDescription": "Common utility functions.",
       "keywords": "angulargm api b1 b2 boundsequal close common false form function functions google hasnan instanceof isnan l1 l2 lat latlng latlngbounds latlngequal latlngtoobj literal lng maps nan null obj object objects objtolatlng problems properties returns second service true utility"
+    },
+    {
+      "section": "api",
+      "id": "angulargm.service:debounce",
+      "shortName": "debounce",
+      "type": "service",
+      "moduleName": "angulargm",
+      "shortDescription": "Debounce function. Stolen from https://github.com/shahata/angular-debounce",
+      "keywords": "angulargm api debounce function https service stolen"
     }
   ],
   "apis": {

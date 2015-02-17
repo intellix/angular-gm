@@ -67,7 +67,7 @@
                      // scope is this directive's isolate scope
                      // scope.$parent is the scope of ng-transclude
                      // scope.$parent.$parent is the one we want
-                handler(scope.$parent.$parent, context);
+                handler(scope.$parent.$parent.$parent, context);
               });
             });
           });
